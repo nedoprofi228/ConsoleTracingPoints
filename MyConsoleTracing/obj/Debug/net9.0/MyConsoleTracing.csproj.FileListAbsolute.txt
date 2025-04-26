@@ -1,0 +1,17 @@
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MyConsoleTracing.exe
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MyConsoleTracing.deps.json
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MyConsoleTracing.runtimeconfig.json
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MyConsoleTracing.dll
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MyConsoleTracing.pdb
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.AssemblyInfoInputs.cache
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.AssemblyInfo.cs
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.csproj.CoreCompileInputs.cache
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.dll
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\refint\MyConsoleTracing.dll
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.pdb
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.genruntimeconfig.cache
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\ref\MyConsoleTracing.dll
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MoreLinq.dll
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.csproj.AssemblyReference.cache
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsol.928861B4.Up2Date

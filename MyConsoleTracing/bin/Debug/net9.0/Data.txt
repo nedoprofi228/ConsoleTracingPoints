@@ -1,0 +1,14 @@
+size: 10,10
+node a: 3,5
+node b: 8,6
+node c: 1,7
+node d: 9,3
+node u: 9,1
+node o: 0,5
+node o1: 0,1
+node o2: 9,9
+
+path: a,b
+path: c,d
+path: u,o
+path: o1,o2
