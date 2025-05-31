@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using MoreLinq;
 using MyConsoleTracing.Entity;
 using MyConsoleTracing.Exceptions;
@@ -15,9 +16,9 @@ public class MatrixService
     {
         Node[,] matrix = new Node[rows, columns];
         
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < columns; j++)
             {
                 matrix[i, j] = new Node(' ', j, i);
             }
@@ -26,13 +27,16 @@ public class MatrixService
         return matrix;
     }
 
-    public bool AddElements(Node[,] matrix, Node startElement, Node endElement)
+    public void SetElementsPare(Node[,] matrix, List<(Node, Node)> elementsPare)
+    {
+        _nodeSets = elementsPare;
+    }
+
+    public bool AddElement(Node[,] matrix, Node node)
     {
         try
         {
-            _nodeSets.Add((startElement, endElement));
-            matrix[startElement.Y, startElement.X] = startElement;
-            matrix[endElement.Y, endElement.X] = endElement;
+            matrix[node.Y, node.X] = node;
             return true;
         }
         catch (Exception e)
@@ -44,48 +48,51 @@ public class MatrixService
 
     public List<List<Node>> GetConnections(Node[,] matrix)
     {
-
-        List<List<Node>> connections = new List<List<Node>>();
-        List<List<List<Node>>> connectionsVariants = new List<List<List<Node>>>();
-        var permutationsSets = _nodeSets.Permutations();
-        
-        foreach (var permutation in permutationsSets)
+        Console.CursorVisible = false;
+        var permutations = _nodeSets.Permutations().ToList();
+        int i = 1;
+        int allCount = permutations.Count();
+        foreach (var permutation in permutations)
         {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine($"Вариант {i} из {allCount} возможных");
+            i++;
+            
+            List<List<Node>> connections = new List<List<Node>>();
+            Node[,] matrixCopy = _CreateMatrixCopy(matrix);
+            
             foreach (var nodeSet in permutation)
             {
-                List<Node> connection = new List<Node>();
-                
-                if(!_liAlgorithm.Wave(matrix, nodeSet.start, nodeSet.end))
+                if (!_liAlgorithm.Wave(matrixCopy, nodeSet.start, nodeSet.end))
                 {
                     break;
                 }
                 
-                if ((connection = _liAlgorithm.GetConnection(matrix, nodeSet.start, nodeSet.end)).Count > 0)
-                {
-                    connections.Add(connection);
-                }
-                else
-                {
-                    _ClearMatrix(matrix);
-                    break;
-                }
+                connections.Add(_liAlgorithm.GetConnection(matrixCopy, nodeSet.start, nodeSet.end));
             }
             
-            if(connections.Count == _nodeSets.Count)
+            if (connections.Count == _nodeSets.Count)
             {
-                connectionsVariants.Add(connections);
+                Console.Clear();
+                return connections;
             }
-            
-            connections = new List<List<Node>>();
-            _ClearMatrix(matrix);
-            
-        }
-        if (connectionsVariants.Count > 0)
-        {
-            return connectionsVariants.OrderBy(var => var.Sum(con => con.Count)).First();
         }
         
         throw new NotFoundConnectionsException("не существует возможных соединений");
+    }
+
+    private Node[,] _CreateMatrixCopy(Node[,] original)
+    {
+        var copy = new Node[original.GetLength(0), original.GetLength(1)];
+        for (int i = 0; i < original.GetLength(0); i++)
+        {
+            for (int j = 0; j < original.GetLength(1); j++)
+            {
+                   copy[i, j] = new Node(original[i, j]); 
+            }
+        }
+        
+        return copy;
     }
 
     public void DrawMatrix(Node[,] matrix, List<List<Node>> connections, int milliseconds)
@@ -118,34 +125,48 @@ public class MatrixService
         }
         
         Console.WriteLine(new string('-', matrix.GetLength(1) + 2));
+        
         foreach (var connection in connections)
         {
-            ConsoleColor color = ConsoleColor.DarkBlue + _random.Next(14);
             foreach (var node in connection)
             {
                 Console.SetCursorPosition(node.X + 1, node.Y + 1);
-
-                Console.ForegroundColor = color;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(node.Value);
                 Console.ResetColor();
                 
                 Task.Delay(milliseconds).Wait();
             }
         }
+        
+        Console.SetCursorPosition(0, matrix.GetLength(0) + 2);
     }
 
-    private void _ClearMatrix(Node[,] matrix)
+    private void PrintMatrixValue(Node[,] matrix)
     {
-        for (var i = 0; i < matrix.GetLength(0); i++)
+        Console.Clear();
+        for (int i = 0; i < matrix.GetLength(0); i++)
         {
             for (int j = 0; j < matrix.GetLength(1); j++)
             {
-                if (matrix[i, j].Value != '@')
-                {
-                    matrix[i, j].Value = ' ';
-                    matrix[i, j].Step = 0;
-                }
+                Console.Write(matrix[i, j].Value);
             }
+            
+            Console.WriteLine();
+        }
+    }
+    
+    private void PrintMatrixSteps(Node[,] matrix)
+    {
+        Console.Clear();
+        for (int i = 0; i < matrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                Console.Write(matrix[i, j].Step);
+            }
+            
+            Console.WriteLine();
         }
     }
 }

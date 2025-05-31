@@ -17,7 +17,7 @@ namespace MyConsoleTracing.Service
             int width = matrix.GetLength(1);
             start.Step = 0;
 
-            while (lastWaves.Count > 0 && !isFounded)
+            while (step < height * width && !isFounded)
             {
                 foreach (var wave in lastWaves)
                 {
@@ -27,76 +27,83 @@ namespace MyConsoleTracing.Service
                     if (x + 1 < width)
                     {
                         Node neighbor = matrix[y, x + 1];
-                        if (neighbor == end)
+                        if (neighbor.X == end.X && neighbor.Y == end.Y)
                         {
-                            neighbor.Step = step;
+                            end.Step = step;
                             isFounded = true;
                         }
-                        
+
                         if (neighbor.Value == ' ')
                         {
                             neighbor.Step = step;
                             neighbor.Value = '^';
                             currentWaves.Add(neighbor);
                         }
+                        
                     }
 
                     if (x - 1 >= 0)
                     {
                         Node neighbor = matrix[y, x - 1];
-                        if (neighbor == end)
+                        if (neighbor.X == end.X && neighbor.Y == end.Y)
                         {
-                            neighbor.Step = step;
+                            end.Step = step;
                             isFounded = true;
                         }
-                        
+
                         if (neighbor.Value == ' ')
                         {
                             neighbor.Step = step;
                             neighbor.Value = '^';
                             currentWaves.Add(neighbor);
                         }
+                     
                     }
 
                     if (y + 1 < height)
                     {
                         Node neighbor = matrix[y + 1, x];
-                        if (neighbor == end)
+                        if (neighbor.X == end.X && neighbor.Y == end.Y)
                         {
-                            neighbor.Step = step;
+                            end.Step = step;
                             isFounded = true;
                         }
-                        
+
                         if (neighbor.Value == ' ')
                         {
                             neighbor.Step = step;
                             neighbor.Value = '^';
                             currentWaves.Add(neighbor);
                         }
+                        
                     }
 
                     if (y - 1 >= 0)
                     {
                         Node neighbor = matrix[y - 1, x];
-                        if (neighbor == end)
+                        if (neighbor.X == end.X && neighbor.Y == end.Y)
                         {
-                            neighbor.Step = step;
+                            end.Step = step;
                             isFounded = true;
                         }
-                        
+
                         if (neighbor.Value == ' ')
                         {
                             neighbor.Step = step;
                             neighbor.Value = '^';
                             currentWaves.Add(neighbor);
                         }
+                    
                     }
+                    
+                    
                 }
                 
                 lastWaves = currentWaves;
                 currentWaves = new List<Node>();
                 step++;
             }
+
 
             return isFounded;
         }
@@ -107,7 +114,7 @@ namespace MyConsoleTracing.Service
             {
                 return new List<Node>();
             }
-            
+
             List<Node> path = new List<Node>();
             Node current = end;
 
@@ -117,8 +124,8 @@ namespace MyConsoleTracing.Service
                 {
                     current.Value = '*';
                 }
-                
-                path.Add(new Node(current));
+
+                path.Add(current);
                 int cx = current.X;
                 int cy = current.Y;
                 int cstep = current.Step;
@@ -145,12 +152,9 @@ namespace MyConsoleTracing.Service
                 }
             }
 
-            end.Value = '@';
-            start.Value = '@';
             path.Add(start);
             path.Reverse();
             _CleanMatrix(matrix);
-            
             return path;
         }
 
@@ -170,18 +174,42 @@ namespace MyConsoleTracing.Service
             }
         }
 
-        private void PrintMatrix(Node[,] matrix, bool isValue)
+        private void PrintMatrix(Node[,] matrix, Node curNode, Node startNode, Node endNode, bool isValue)
         {
-            Console.WriteLine(new string('-', 60));
             Console.Clear();
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
                     if (isValue)
+                    {
+                        if ((matrix[i, j].X == startNode.X && matrix[i, j].Y == startNode.Y)|| (matrix[i, j].X == endNode.X && matrix[i, j].Y == endNode.Y))
+                        {
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                        }
+                        else if (matrix[i, j] == curNode)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                        }
+                        
                         Console.Write(matrix[i, j].Value);
+                        Console.ResetColor();
+                    }
+
                     else
+                    {
+                        if (matrix[i, j] == startNode || matrix[i, j] == endNode)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                        }
+                        else if (matrix[i, j] == curNode)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                        }
+                        
                         Console.Write(matrix[i, j].Step + " ");
+                        Console.ResetColor();
+                    }
                 }
                 
                 Console.WriteLine();

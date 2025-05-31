@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyConsoleTracing")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28aac70904e5f9dc24437b5261d5951e28c49994")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyConsoleTracing")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyConsoleTracing")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

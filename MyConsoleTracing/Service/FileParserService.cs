@@ -5,10 +5,10 @@ namespace MyConsoleTracing.Service;
 
 public class FileParserService
 {
-    public int sizeX = 10;
-    public int sizeY = 10;
-    public List<(Node startNode, Node endNode)> ListNodes { get; private set; }= new List<(Node, Node)>();
-    
+    public int sizeX = 26;
+    public int sizeY = 11;
+    public List<(Node startNode, Node endNode)> ListNodesPare { get; private set; }= new List<(Node, Node)>();
+    public List<Node> ListNodes { get; private set; } = new List<Node>();
     private string _filePath;
     private Dictionary<string, Node> _nodeDict = new Dictionary<string, Node>();
 
@@ -24,23 +24,18 @@ public class FileParserService
         while (!streamReader.EndOfStream)
         {
             string[] lineData = streamReader.ReadLine().Split(':');
-
-            if (lineData[0].Contains("size"))
-            {
-                string[] sizeData = lineData[1].Split(',');
-                this.sizeX = int.Parse(sizeData[0]);
-                this.sizeY = int.Parse(sizeData[1]);
-            }
-
-            else if (lineData[0].Contains("node"))
+            
+            if (lineData[0].Contains("элемент"))
             {
                 string[] posData = lineData[1].Split(',');
                 string nodeName = lineData[0].Split(' ')[1];
 
-                _nodeDict[nodeName] = new Node('@', int.Parse(posData[0]), int.Parse(posData[1]));
+                Node newNode =  new Node('@', int.Parse(posData[0].Trim()), int.Parse(posData[1].Trim()));
+                _nodeDict[nodeName] = newNode;
+                ListNodes.Add(newNode);
             }
 
-            else if (lineData[0].Contains("path"))
+            else if (lineData[0].Contains("злучыць"))
             {
                 string[] pathData = lineData[1].Split(',');
 
@@ -50,10 +45,12 @@ public class FileParserService
                 if (_nodeDict.TryGetValue(pathData[0].Trim(), out startNode)
                     && _nodeDict.TryGetValue(pathData[1].Trim(), out endNode))
                 {
-                    ListNodes.Add((startNode, endNode));
+                    ListNodesPare.Add((startNode, endNode));
                 }
 
             }
         }
+        
+        streamReader.Close();
     }
 }

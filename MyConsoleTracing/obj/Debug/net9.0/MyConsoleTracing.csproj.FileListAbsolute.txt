@@ -15,3 +15,4 @@ D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\r
 D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\bin\Debug\net9.0\MoreLinq.dll
 D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.csproj.AssemblyReference.cache
 D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsol.928861B4.Up2Date
+D:\Programming\Projects\С#\MyConsoleTracing\MyConsoleTracing\obj\Debug\net9.0\MyConsoleTracing.sourcelink.json
